@@ -5,6 +5,8 @@ export default {
     name: 'addadmin',
     category: 'Configuration',
     description: 'add admin to bot',
+    cooldown: '5s',
+    guildOnly:true,
     options: [{
         name: 'username',
         description: 'user\'s ingame name',
@@ -20,7 +22,7 @@ export default {
             await interaction.deferReply({
             })
 
-            const query = `sqlite3 ~/aura-bot/aura.dbs \"INSERT INTO ADMINS (name, server) VALUES ('${ args[0] }', 'server.eurobattle.net') RETURNING *\"`
+            const query = `sqlite3 ~/aura-bot/aura.dbs \"INSERT INTO ADMINS (name, server) VALUES ('${args[0]}', 'server.eurobattle.net') RETURNING *\"`
             const result = await execShellCommand(query) as string
 
             await interaction.editReply({

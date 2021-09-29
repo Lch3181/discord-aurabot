@@ -5,7 +5,8 @@ export default {
     name: 'cmd',
     category: 'Configuration',
     description: 'Using Command Prompt',
-    ownerOnly:true,
+    hidden: true,
+    ownerOnly: true,
     options: [{
         name: 'input',
         description: 'syntax for command',
