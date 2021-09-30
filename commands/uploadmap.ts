@@ -8,6 +8,7 @@ export default {
     description: 'upload a map to bot',
     ownerOnly: true,
     guildOnly: true,
+    globalCooldown: '1m',
     options: [
         {
             name: 'url',
@@ -39,12 +40,12 @@ export default {
             const url = interaction.options.getString('url')
             const filename = interaction.options.getString('filename')
             const config = interaction.options.getString('config')
-            const syntax = `curl -o \"~/aura-bot/maps/${filename}\" ${url}`
+            const syntax = `curl -o \"/home/lch/aura-bot/maps/${filename}\" ${url}`
 
             if (config) {
                 const data = `map_path = \"maps\\${filename}\"\nmap_type =\nmap_localpath = \"${filename}\"`
 
-                fs.writeFile(`~/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
+                fs.writeFile(`/home/lch/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
                     if (error) throw error
                 })
             }
