@@ -4,6 +4,7 @@ export default {
     name: 'urgey',
     category: 'Fun',
     description: 'Yes',
+    cooldown: '5s',
 
     slash: true,
     testOnly: true,

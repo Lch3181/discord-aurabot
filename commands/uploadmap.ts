@@ -6,25 +6,25 @@ export default {
     name: 'uploadmap',
     category: 'Configuration',
     description: 'upload a map to bot',
-    ownerOnly: true,
     guildOnly: true,
     globalCooldown: '1m',
     options: [
         {
             name: 'url',
-            description: 'download link',
+            description: 'direct download link',
             required: true,
             type: 3
         },
         {
-            name: 'filename',
-            description: 'enter filename manually if URL does not have file name at the end',
+            name: 'file_name',
+            description: 'the name of the file',
             required: true,
             type: 3
         },
         {
-            name: 'config',
-            description: 'enter the name of the config file for !load',
+            name: 'config_name',
+            description: 'the name of the config file for !load',
+            required: true,
             type: 3
         }
     ],
@@ -37,23 +37,40 @@ export default {
             await interaction.deferReply({
             })
 
+            var result = ''
             const url = interaction.options.getString('url')
-            const filename = interaction.options.getString('filename')
-            const config = interaction.options.getString('config')
-            const syntax = `curl -o \"/home/lch/aura-bot/maps/${filename}\" ${url}`
+            const filename = interaction.options.getString('file_name')
+            const config = interaction.options.getString('config_name')
+            const syntax = `wget -O \"/home/lch/aura-bot/maps/${filename}\" \"${url}\"`
 
-            if (config) {
-                const data = `map_path = \"maps\\${filename}\"\nmap_type =\nmap_localpath = \"${filename}\"`
-
-                fs.writeFile(`/home/lch/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
-                    if (error) throw error
+            //error handling
+            if (!filename?.includes('w3x')) {
+                await interaction.editReply({
+                    content: 'Please only upload warcraft III maps.',
                 })
-            }
 
+                return
+            }
+            
+            //write config file
+            const data = `map_path = \"maps\\${filename}\"\nmap_type =\nmap_localpath = \"${filename}\"\n`
+
+            fs.writeFile(`/home/lch/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
+                if (error) throw error
+            })
+
+            //download map
             await execShellCommand(syntax)
 
+            //get filesize for user to double check if correct
+            const filesize = (await fs.promises.stat(`/home/lch/aura-bot/maps/${filename}`)).size
+
+            //output
+            result += `${config}.cfg and ${filename} with ${filesize} Byte uploaded.`
+            result += `\nYou can now enter the game and type !load ${config} to host ${filename}`
+
             await interaction.editReply({
-                content: `${filename} ${config} uploaded.`,
+                content: result,
             })
         }
     },
