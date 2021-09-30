@@ -8,7 +8,7 @@ export default {
     hidden: true,
     ownerOnly: true,
     options: [{
-        name: 'input',
+        name: 'syntax',
         description: 'syntax for command',
         required: true,
         type: 3,
@@ -21,7 +21,7 @@ export default {
         if (interaction) {
             await interaction.deferReply({
             })
-
+            
             const result = await execShellCommand(args[0]) as string
 
             await interaction.editReply({

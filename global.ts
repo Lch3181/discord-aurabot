@@ -2,17 +2,17 @@
 /**
  * Executes a shell command and return it as a Promise.
  * limit output to 2000 character for discord slash command limit
- * @param cmd {string}
+ * @param syntax {string}
  * @return {Promise<string>}
  */
- export function execShellCommand(cmd: any) {
+ export function execShellCommand(syntax: string) {
     const exec = require('child_process').exec;
     return new Promise((resolve, reject) => {
-        exec(`${cmd} | tail -c2000`, (error: any, stdout: unknown, stderr: unknown) => {
+        exec(`${syntax}`, (error: any, stdout: string, stderr: string) => {
             if (error) {
                 console.warn(error);
             }
-            resolve(stdout ? stdout : stderr);
+            resolve(stdout ? stdout.substr(-2000) : stderr.substr(-2000));
         });
     });
 }
