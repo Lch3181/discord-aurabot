@@ -53,7 +53,7 @@ export default {
             }
             
             //write config file
-            const data = `map_path = \"maps\\${filename}\"\nmap_type =\nmap_localpath = \"${filename}\"\n`
+            const data = `map_path = maps\\${filename}\nmap_type =\nmap_localpath = ${filename}\n`
 
             fs.writeFile(`/home/lch/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
                 if (error) throw error
