@@ -8,7 +8,7 @@
  export function execShellCommand(cmd: any) {
     const exec = require('child_process').exec;
     return new Promise((resolve, reject) => {
-        exec(`${cmd} | head -c2000`, (error: any, stdout: unknown, stderr: unknown) => {
+        exec(`${cmd} | tail -c2000`, (error: any, stdout: unknown, stderr: unknown) => {
             if (error) {
                 console.warn(error);
             }
