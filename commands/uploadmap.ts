@@ -17,7 +17,7 @@ export default {
         },
         {
             name: 'file_name',
-            description: 'the name of the file',
+            description: 'the name of the map',
             required: true,
             type: 3
         },
@@ -37,7 +37,6 @@ export default {
             await interaction.deferReply({
             })
 
-            var result = ''
             const url = interaction.options.getString('url')
             const filename = interaction.options.getString('file_name')
             const config = interaction.options.getString('config_name')
@@ -51,9 +50,11 @@ export default {
 
                 return
             }
-            
+
             //write config file
-            const data = `map_path = maps\\${filename}\nmap_type =\nmap_localpath = ${filename}\n`
+            const data = `map_path = maps\\${filename}\n` +
+                `map_type =\n` +
+                `map_localpath = ${filename}\n`
 
             fs.writeFile(`/home/lch/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
                 if (error) throw error
@@ -66,8 +67,9 @@ export default {
             const filesize = (await fs.promises.stat(`/home/lch/aura-bot/maps/${filename}`)).size
 
             //output
-            result += `${config}.cfg and ${filename} with ${filesize} Byte uploaded.`
-            result += `\nYou can now enter the game and type !load ${config} to host ${filename}`
+            const result = `Configuration: ${config}.cfg\n` +
+                `Map: ${filename} with ${filesize} Byte\n` +
+                `You can now enter the game and type !load ${config} to host ${filename}`
 
             await interaction.editReply({
                 content: result,
