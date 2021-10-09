@@ -11,19 +11,19 @@ export default {
     options: [
         {
             name: 'url',
-            description: 'direct download link',
+            description: 'direct download link. Example: Discord attachment, right click copy link',
             required: true,
             type: 3
         },
         {
             name: 'file_name',
-            description: 'the name of the map',
+            description: 'the name of the map. Example for twrpg: twrpgv0.53a_eng',
             required: true,
             type: 3
         },
         {
             name: 'config_name',
-            description: 'the name of the config file for !load',
+            description: 'the name of the config file. Example for twrpg: twre',
             required: true,
             type: 3
         }
@@ -38,18 +38,9 @@ export default {
             })
 
             const url = interaction.options.getString('url')
-            const filename = interaction.options.getString('file_name')
+            const filename = interaction.options.getString('file_name') + '.w3x'
             const config = interaction.options.getString('config_name')
             const syntax = `wget -O \"/home/lch/aura-bot/maps/${filename}\" \"${url}\"`
-
-            //error handling
-            if (!filename?.includes('w3x')) {
-                await interaction.editReply({
-                    content: 'Please only upload warcraft III maps.',
-                })
-
-                return
-            }
 
             //write config file
             const data = `map_path = maps\\${filename}\n` +
@@ -67,7 +58,7 @@ export default {
             const filesize = (await fs.promises.stat(`/home/lch/aura-bot/maps/${filename}`)).size
 
             //output
-            const result = `Configuration: ${config}.cfg\n` +
+            const result = `Configuration: ${config}\n` +
                 `Map: ${filename} with ${filesize} Byte\n` +
                 `You can now enter the game and type !load ${config} to host ${filename}`
 
