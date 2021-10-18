@@ -30,5 +30,8 @@ client.on('ready', async () => {
     })
         .setBotOwner(['227956824521834500'])
 })
-
-client.login(process.env.TOKEN)
+if(process.env.NODE_ENV == "development") {
+    client.login(process.env.TOKEN_DEV)
+} else {
+    client.login(process.env.TOKEN)
+}

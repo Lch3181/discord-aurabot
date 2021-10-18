@@ -9,7 +9,7 @@ export default {
     ownerOnly: true,
     options: [{
         name: 'syntax',
-        description: 'syntax for command',
+        description: 'bot owner only',
         required: true,
         type: 3,
     }],
