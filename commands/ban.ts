@@ -2,15 +2,15 @@ import WOKCommands, { ICommand } from "wokcommands";
 import { execShellCommand } from "../global";
 
 export default {
-    name: 'admin',
+    name: 'ban',
     category: 'Configuration',
-    description: 'edit bot admin',
+    description: 'edit bot banlist',
     cooldown: '5s',
     guildOnly: true,
     options: [
         {
             name: 'add',
-            description: 'add user to admin',
+            description: 'add user to banlist',
             type: 1,
             options: [
                 {
@@ -18,12 +18,17 @@ export default {
                     description: 'user\'s ingame name',
                     required: true,
                     type: 3,
+                },
+                {
+                    name: 'reason',
+                    description: 'the reason to ban user',
+                    type: 3,
                 }
             ],
         },
         {
             name: 'remove',
-            description: 'remove user from admin',
+            description: 'remove user from banlist',
             type: 1,
             options: [
                 {
@@ -36,7 +41,7 @@ export default {
         },
         {
             name: 'list',
-            description: 'list admin(s)',
+            description: 'list ban(s)',
             type: 1,
             options: [
                 {
@@ -58,18 +63,19 @@ export default {
 
             let query = 'sqlite3 ~/aura-bot/aura.dbs '
             const username = interaction.options.getString('username')?.toLowerCase()
+            const reason: string = interaction.options.getString('reason') ? interaction.options.getString('reason') as string : ''
             switch (interaction.options.getSubcommand()) {
                 case 'add':
-                    query += `"INSERT INTO ADMINS (name, server) SELECT '${username}', 'server.eurobattle.net' WHERE NOT EXISTS (SELECT name FROM admins WHERE name = '${username}') RETURNING *"` as const
+                    query += `"INSERT INTO bans (name, server, date, admin, reason) SELECT '${username}', 'server.eurobattle.net', date('now'), '${interaction.user.tag}', '${reason}' WHERE NOT EXISTS (SELECT name FROM bans WHERE name = '${username}') RETURNING *"` as const
                     break
                 case 'remove':
-                    query += `"DELETE FROM ADMINS WHERE name = '${username}' RETURNING *"` as const
+                    query += `"DELETE FROM bans WHERE name = '${username}' RETURNING *"` as const
                     break
                 case 'list':
-                    if(username) {
-                        query += `"SELECT name FROM ADMINS WHERE name = '${username}'"`
+                    if (username) {
+                        query += `"SELECT name, date, admin, reason FROM bans WHERE name = '${username}'"`
                     } else {
-                        query += `"SELECT name FROM ADMINS ORDER BY name"`
+                        query += `"SELECT name FROM bans ORDER BY name"`
                     }
                     break
             }
@@ -81,14 +87,14 @@ export default {
             if (result) {
                 switch (interaction.options.getSubcommand()) {
                     case 'add':
-                        result = `${username} added to admin`
+                        result = `${username} added to banlist\n${result}`
                         break
                     case 'remove':
-                        result = `${username} removed from admin`
+                        result = `${username} removed from banlist\n${result}`
                         break
                     case 'list':
-                        if(username) {
-                            result = `${username} is admin`
+                        if (username) {
+                            result = `${username} is banned\n${result}`
                         }
                         break
                 }
@@ -101,8 +107,8 @@ export default {
                         result = `${username} does not exist`
                         break
                     case 'list':
-                        if(username) {
-                            result = `${username} is not admin`
+                        if (username) {
+                            result = `${username} is not banned`
                         } else {
                             result = 'empty'
                         }
