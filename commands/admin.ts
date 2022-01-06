@@ -56,7 +56,7 @@ export default {
             await interaction.deferReply({
             })
 
-            let query = 'sqlite3 ~/aura-bot/aura.dbs '
+            let query = 'sqlite3 ~/aura-bot/aura.dbs -header '
             const username = interaction.options.getString('username')?.toLowerCase()
             switch (interaction.options.getSubcommand()) {
                 case 'add':

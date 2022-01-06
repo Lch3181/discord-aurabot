@@ -61,7 +61,7 @@ export default {
             await interaction.deferReply({
             })
 
-            let query = 'sqlite3 ~/aura-bot/aura.dbs '
+            let query = 'sqlite3 ~/aura-bot/aura.dbs -header '
             const username = interaction.options.getString('username')?.toLowerCase()
             const reason: string = interaction.options.getString('reason') ? interaction.options.getString('reason') as string : ''
             switch (interaction.options.getSubcommand()) {

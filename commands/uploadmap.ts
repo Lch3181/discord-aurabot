@@ -40,14 +40,14 @@ export default {
             const url = interaction.options.getString('url')
             const filename = interaction.options.getString('file_name') + '.w3x'
             const config = interaction.options.getString('config_name')
-            const syntax = `wget -O \"/home/lch/aura-bot/maps/${filename}\" \"${url}\"`
+            const syntax = `wget -O \"/home/ubuntu/aura-bot/maps/${filename}\" \"${url}\"`
 
             //write config file
             const data = `map_path = maps\\${filename}\n` +
                 `map_type =\n` +
                 `map_localpath = ${filename}\n`
 
-            fs.writeFile(`/home/lch/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
+            fs.writeFile(`/home/ubuntu/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
                 if (error) throw error
             })
 
@@ -55,11 +55,12 @@ export default {
             await execShellCommand(syntax)
 
             //get filesize for user to double check if correct
-            const filesize = (await fs.promises.stat(`/home/lch/aura-bot/maps/${filename}`)).size
+            const filesize = (await fs.promises.stat(`/home/ubuntu/aura-bot/maps/${filename}`)).size
 
             //output
             const result = `Configuration: ${config}\n` +
                 `Map: ${filename} with ${filesize} Byte\n` +
+                `Download: ${url}\n` +
                 `You can now enter the game and type !load ${config} to host ${filename}`
 
             await interaction.editReply({

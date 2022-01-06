@@ -25,7 +25,7 @@ export default {
             const result = await execShellCommand(args[0]) as string
 
             await interaction.editReply({
-                content: result,
+                content: `\`\`\`cmd\n${result}\`\`\``,
             })
         }
     },
