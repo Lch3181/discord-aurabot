@@ -6,7 +6,7 @@ import * as os from 'os'
 export default {
     name: 'uploadmap',
     category: 'Configuration',
-    description: 'upload a map to bot',
+    description: 'upload a map to bot (root admin only)',
     ownerOnly: true,
     guildOnly: true,
     globalCooldown: '1m',
