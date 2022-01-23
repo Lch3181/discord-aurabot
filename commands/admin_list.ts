@@ -2,22 +2,16 @@ import WOKCommands, { ICommand } from "wokcommands";
 import { execShellCommand } from "../global";
 
 export default {
-    name: 'ban',
+    name: 'admin_list',
     category: 'Configuration',
-    description: 'ban a user (root admin only)',
+    description: 'list all admins or specific user',
     cooldown: '5s',
-    ownerOnly: true,
     guildOnly: true,
     options: [
         {
             name: 'username',
             description: 'user\'s ingame name',
-            required: true,
-            type: 3,
-        },
-        {
-            name: 'reason',
-            description: 'the reason to ban user',
+            required: false,
             type: 3,
         }
     ],
@@ -31,18 +25,29 @@ export default {
 
             let query = 'sqlite3 ~/aura-bot/aura.dbs -header '
             const username = interaction.options.getString('username')?.toLowerCase()
-            const reason: string = interaction.options.getString('reason') ? interaction.options.getString('reason') as string : ''
-            query += `"INSERT INTO bans (name, server, date, admin, reason) SELECT '${username}', 'server.eurobattle.net', date('now'), '${interaction.user.tag}', '${reason}' WHERE NOT EXISTS (SELECT name FROM bans WHERE name = '${username}') RETURNING *"` as const
+            if(username) {
+                query += `"SELECT * FROM ADMINS WHERE name = '${username}'"`
+            } else {
+                query += `"SELECT name FROM ADMINS ORDER BY name"`
+            }
 
             //execute query
             let result = await execShellCommand(query) as string
 
             //output
             if (result) {
-                result = `${username} banned` +
-                    `\`\`\`${result}\`\`\``
+                if(username) {
+                    result = `${username} is an admin` +
+                        `\`\`\`${result}\`\`\``
+                } else {
+                    result = `\`\`\`${result.replace(/\n/g, " ")}\`\`\``
+                }
             } else {
-                result = `${username} already banned`
+                if(username) {
+                    result = `${username} is not admin`
+                } else {
+                    result = 'empty'
+                }
             }
 
             await interaction.editReply({

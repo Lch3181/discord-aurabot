@@ -16,7 +16,8 @@ client.on('ready', async () => {
     new WOKCommands(client, {
         commandsDir: path.join(__dirname, 'commands'),
         typeScript: true,
-        testServers: ['627324186855079956', '780206472444510238'],
+        botOwners: ['227956824521834500'],
+        testServers: ['627324186855079956'],
         mongoUri: process.env.MONGO_URI,
         disabledDefaultCommands: [
             'help',
@@ -28,7 +29,6 @@ client.on('ready', async () => {
             'slash'
         ],
     })
-        .setBotOwner(['227956824521834500'])
 })
 if(process.env.NODE_ENV == "development") {
     client.login(process.env.TOKEN_DEV)

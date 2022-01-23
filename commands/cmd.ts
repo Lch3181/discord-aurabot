@@ -4,8 +4,7 @@ import { execShellCommand } from "../global";
 export default {
     name: 'cmd',
     category: 'Configuration',
-    description: 'Using Command Prompt',
-    hidden: true,
+    description: 'Using Command Prompt (root admin only)',
     ownerOnly: true,
     options: [{
         name: 'syntax',
@@ -15,7 +14,6 @@ export default {
     }],
 
     slash: true,
-    testOnly: true,
 
     callback: async ({ interaction, args }) => {
         if (interaction) {

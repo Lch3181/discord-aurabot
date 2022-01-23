@@ -1,11 +1,13 @@
 import WOKCommands, { ICommand } from "wokcommands";
 import { execShellCommand } from "../global";
 import * as fs from 'fs'
+import * as os from 'os'
 
 export default {
     name: 'uploadmap',
     category: 'Configuration',
     description: 'upload a map to bot',
+    ownerOnly: true,
     guildOnly: true,
     globalCooldown: '1m',
     options: [
@@ -30,24 +32,24 @@ export default {
     ],
 
     slash: true,
-    testOnly: true,
 
     callback: async ({ interaction }) => {
         if (interaction) {
             await interaction.deferReply({
             })
 
+            const OSuser = os.userInfo().username
             const url = interaction.options.getString('url')
             const filename = interaction.options.getString('file_name') + '.w3x'
             const config = interaction.options.getString('config_name')
-            const syntax = `wget -O \"/home/ubuntu/aura-bot/maps/${filename}\" \"${url}\"`
+            const syntax = `wget -O \"/home/${OSuser}/aura-bot/maps/${filename}\" \"${url}\"`
 
             //write config file
             const data = `map_path = maps\\${filename}\n` +
                 `map_type =\n` +
                 `map_localpath = ${filename}\n`
 
-            fs.writeFile(`/home/ubuntu/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
+            fs.writeFile(`/home/${OSuser}/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
                 if (error) throw error
             })
 
@@ -55,7 +57,7 @@ export default {
             await execShellCommand(syntax)
 
             //get filesize for user to double check if correct
-            const filesize = (await fs.promises.stat(`/home/ubuntu/aura-bot/maps/${filename}`)).size
+            const filesize = (await fs.promises.stat(`/home/${OSuser}/aura-bot/maps/${filename}`)).size
 
             //output
             const result = `Configuration: ${config}\n` +

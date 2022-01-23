@@ -1,4 +1,5 @@
 import WOKCommands, { ICommand } from "wokcommands";
+import { delay } from "../global";
 
 export default {
     name: 'urgey',
@@ -7,15 +8,17 @@ export default {
     cooldown: '5s',
 
     slash: true,
-    testOnly: true,
+    guildOnly: true,
 
     callback: async ({ interaction, args }) => {
         if (interaction) {
-            interaction.reply({
+            await interaction.reply({
                 content: "you too"
             })
+            
+            await delay(1000)
 
-            await interaction.followUp({
+            await interaction.editReply({
                 content: "<:urgey:785250321298882560>",
             })
         }
