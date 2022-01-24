@@ -1,10 +1,15 @@
 # discord-aurabot
-A bridge to control aura-bot through discord.  
+A bridge to control Warcraft III [aura-bot](https://github.com/sfarmani/aura-bot) through discord.  
 
 ## Installation
 create account in [mongoDB](https://www.mongodb.com/)   
 create empty database   
 allow your ip to access it from network       
+
+clone repo
+```cmd
+git clone 'https://github.com/Lch3181/discord-aurabot.git'
+```
 
 create .env file    
 ```env
