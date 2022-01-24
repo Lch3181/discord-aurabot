@@ -43,12 +43,12 @@ copy and paste instruction
 pm2 save
 ```
 
-## Commands
+## Slash Commands (takes 1hour+- to apply to server)
 - add_admin(username)
 - remove_admin(username) **botowner only**
-- admin_list(username; optional)
+- admin_list(optional; username)
 - ban(username) **botowner only**
 - unban(username) **botowner only**
-- ban_list(username; optional)
+- ban_list(optional; username)
 - uploadmap(url, filename, config name) **botowner only**
 - cmd(syntax) **botowner only**
