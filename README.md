@@ -27,6 +27,11 @@ npm install
 npm run start
 ```
 
+debug
+```cmd
+npm run dev
+```
+
 if you want it auto start on reboot
 install [pm2](https://pm2.keymetrics.io/)
 
