@@ -15,7 +15,7 @@ create .env file
 ```env
 TOKEN=your bot token    
 TOKEN_DEV=your test bot token
-MongoDB=your MongoDB database link   
+MongoDB_URL=your MongoDB database link   
 BOTOWNER=['your discord id']
 TESTSERVER=['your test server id']
 ```
