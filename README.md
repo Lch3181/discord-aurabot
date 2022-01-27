@@ -40,7 +40,7 @@ install [nodejs lts v16+](https://www.digitalocean.com/community/tutorials/how-t
 ```cmd
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source ~/.bashrc
-nvm install lts
+nvm install v17.3.0
 node -v
 ```
 
