@@ -12,18 +12,38 @@ git clone 'https://github.com/Lch3181/discord-aurabot.git'
 ```
 
 create .env file    
+```cmd
+cd discord-aurabot
+nano .env
+copy the template below
+```
 ```env
 TOKEN=your bot token    
 TOKEN_DEV=your test bot token
 MongoDB_URL=your MongoDB database link   
 BOTOWNER=['your discord id']
-TESTSERVER=['your test server id']
+TESTSERVER=['your test server id'] # only for debugging
+```
+
+install sqlite3 v3.35+
+```
+wget 'https://www.sqlite.org/2022/sqlite-autoconf-3370200.tar.gz'
+tar xvfz sqlite-autoconf-3370200.tar.gz
+cd sqlite-autoconf-3370200
+./configure
+make
+sudo make install
+sqlite3 --version
 ```
 
 install [nodejs lts](https://nodejs.org/)
 
 ```cmd
 npm install
+```
+
+start server
+```cmd
 npm run start
 ```
 
