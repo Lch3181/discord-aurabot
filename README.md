@@ -36,7 +36,7 @@ sudo make install
 sqlite3 --version
 ```
 
-install [nodejs lts](https://nodejs.org/)
+install [nodejs lts v16+](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
 
 ```cmd
 npm install
