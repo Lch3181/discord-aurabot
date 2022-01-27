@@ -19,10 +19,10 @@ copy the template below
 ```
 ```env
 TOKEN=your bot token    
-TOKEN_DEV=your test bot token
+TOKEN_DEV=your test bot token # only for debugging, can leave empty
 MongoDB_URL=your MongoDB database link   
 BOTOWNER=['your discord id']
-TESTSERVER=['your test server id'] # only for debugging
+TESTSERVER=['your test server id'] # only for debugging, can leave empty
 ```
 
 install sqlite3 v3.35+
