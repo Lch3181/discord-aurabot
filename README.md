@@ -64,7 +64,7 @@ install [pm2](https://pm2.keymetrics.io/)
 
 ```cmd
 npm install pm2 -g
-pm2 start 'npm run start' -name 'discord aura-bot'
+pm2 start 'npm run start' --name 'discord aura-bot'
 pm2 startup
 copy and paste instruction
 pm2 save
