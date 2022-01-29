@@ -17,7 +17,7 @@ client.on('ready', async () => {
         commandsDir: path.join(__dirname, 'commands'),
         typeScript: true,
         botOwners: process.env.BOTOWNER,
-        testServers: process.env.TESTSERVER,
+        testServers: [process.env.TESTSERVER as string],
         mongoUri: process.env.MONGO_URI,
         disabledDefaultCommands: [
             'help',
@@ -30,6 +30,7 @@ client.on('ready', async () => {
         ],
     })
 })
+
 if(process.env.NODE_ENV == "development") {
     client.login(process.env.TOKEN_DEV)
 } else {

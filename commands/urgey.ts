@@ -9,6 +9,7 @@ export default {
 
     slash: true,
     guildOnly: true,
+    testOnly: (process.env.NODE_ENV == "development") ? true:false,
 
     callback: async ({ interaction, args }) => {
         if (interaction) {

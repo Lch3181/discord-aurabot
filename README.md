@@ -21,8 +21,8 @@ copy the template below
 TOKEN=your bot token    
 TOKEN_DEV=your test bot token # only for debugging, can leave empty
 MongoDB_URL=your MongoDB database link   
-BOTOWNER=['your discord id']
-TESTSERVER=['your test server id'] # only for debugging, can leave empty
+BOTOWNER=['your discord id'] # can have more than 1 owner, just add like array
+TESTSERVER=your test server id # only 1 server for debugging, can leave empty
 ```
 
 install sqlite3 v3.35+

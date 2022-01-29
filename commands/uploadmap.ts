@@ -32,6 +32,7 @@ export default {
     ],
 
     slash: true,
+    testOnly: (process.env.NODE_ENV == "development") ? true:false,
 
     callback: async ({ interaction }) => {
         if (interaction) {
