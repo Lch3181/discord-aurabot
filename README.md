@@ -52,11 +52,13 @@ npm install
 start server
 ```cmd
 npm run start
+npm run start:private
 ```
 
 debug
 ```cmd
 npm run dev
+npm run dev:private
 ```
 
 if you want it auto start on reboot
@@ -72,10 +74,10 @@ pm2 save
 
 ## Slash Commands (takes 1hour+- to apply to server)
 - /add_admin(username)
-- /remove_admin(username) **botowner only**
+- /remove_admin(username) **botowner/private only**
 - /admin_list(optional; username)
-- /ban(username) **botowner only**
-- /unban(username) **botowner only**
+- /ban(username) **botowner/private only**
+- /unban(username) **botowner/private only**
 - /ban_list(optional; username)
-- /uploadmap(url, filename, config name) **botowner only**
+- /uploadmap(url, filename, config name) **botowner/private only**
 - /cmd(syntax) **botowner only**

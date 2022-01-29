@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node index.ts",
-    "dev": "NODE_ENV=development nodemon index.ts"
+    "start": "USAGE=public ts-node index.ts",
+    "start:private": "ts-node index.ts",
+    "dev": "NODE_ENV=development USAGE=public nodemon index.ts",
+    "dev:private": "NODE_ENV=development nodemon index.ts"
   },
   "keywords": [],
   "author": "",

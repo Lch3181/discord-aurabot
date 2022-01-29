@@ -6,8 +6,8 @@ export default {
     category: 'Configuration',
     description: 'remove user from admin (root admin only)',
     cooldown: '5s',
+    ownerOnly: (process.env.USAGE == "public") ? true:false,
     guildOnly: true,
-    ownerOnly: true,
     options: [
         {
             name: 'username',

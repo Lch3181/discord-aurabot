@@ -6,7 +6,7 @@ export default {
     category: 'Configuration',
     description: 'unban a user (root admin only)',
     cooldown: '5s',
-    ownerOnly: true,
+    ownerOnly: (process.env.USAGE == "public") ? true:false,
     guildOnly: true,
     options: [
         {
