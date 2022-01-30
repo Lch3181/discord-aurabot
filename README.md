@@ -4,7 +4,21 @@ A bridge to control Warcraft III [aura-bot](https://github.com/sfarmani/aura-bot
 ## Installation
 create account in [mongoDB](https://www.mongodb.com/)   
 create empty database   
-allow your ip to access it from network       
+allow your ip to access it from network 
+
+setup a [discord bot](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
+select below options when generating invitation link
+```
+bot
+application.commands
+```
+```
+Send Messages
+Send Messages in Threads
+Read Message History
+Use External Emojis
+Use Slash Commands
+```
 
 clone repo
 ```cmd
@@ -17,12 +31,13 @@ cd discord-aurabot
 nano .env
 copy the template below
 ```
+
 ```env
-TOKEN=your bot token    
+TOKEN=your bot token
 TOKEN_DEV=your test bot token # only for debugging, can leave empty
-MongoDB_URL=your MongoDB database link   
-BOTOWNER=['your discord id'] # can have more than 1 owner, just add like array
-TESTSERVER=your test server id # only 1 server for debugging, can leave empty
+MongoDB_URL=your MongoDB database link
+BOTOWNER="your discord id", "your discord2 id" # can have more than 1 owner, just add like array.
+TESTSERVER="your test server id" # only for debugging, can have more than 1 test server, just add like array.
 ```
 
 install sqlite3 v3.35+
@@ -36,11 +51,11 @@ sudo make install
 sqlite3 --version
 ```
 
-install [nodejs lts v16+](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
+install [nodejs lts v16.6+](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
 ```cmd
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source ~/.bashrc
-nvm install v17.3.0
+nvm install v16.6.0
 node -v
 ```
 

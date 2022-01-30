@@ -16,8 +16,8 @@ client.on('ready', async () => {
     new WOKCommands(client, {
         commandsDir: path.join(__dirname, 'commands'),
         typeScript: true,
-        botOwners: process.env.BOTOWNER,
-        testServers: [process.env.TESTSERVER as string],
+        botOwners: JSON.parse(process.env.BOTOWNER as string),
+        testServers: JSON.parse(process.env.TESTSERVER as string),
         mongoUri: process.env.MONGO_URI,
         disabledDefaultCommands: [
             'help',
