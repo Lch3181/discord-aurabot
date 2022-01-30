@@ -15,6 +15,7 @@ application.commands
 ```
 Send Messages
 Send Messages in Threads
+Manage Message
 Read Message History
 Use External Emojis
 Use Slash Commands
