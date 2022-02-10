@@ -38,13 +38,13 @@ TOKEN=your bot token
 MongoDB_URL=your MongoDB database link
 
 # permission, can have more than 1 owner, just add like array.
-BOTOWNER="your discord id", "your discord2 id"
+BOTOWNER=["your discord id", "your discord2 id"]
 
 # only for debugging, can leave empty
 TOKEN_DEV=your test bot token
 
 # only for debugging, can have more than 1 test server, just add like array.
-TESTSERVER="your test server id"
+TESTSERVER=["your test server id"]
 ```
 
 install sqlite3 v3.35+
