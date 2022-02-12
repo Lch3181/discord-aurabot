@@ -25,17 +25,22 @@ export default {
             })
 
             let query = 'sqlite3 ~/aura-bot/aura.dbs -header '
-            const username = interaction.options.getString('username')?.toLowerCase()
+            const username = interaction.options.getString('username')?.toLowerCase() as string
             query += `"INSERT INTO ADMINS (name, server) SELECT '${username}', 'server.eurobattle.net' WHERE NOT EXISTS (SELECT name FROM admins WHERE name = '${username}') RETURNING *"` as const
 
             //execute query
             let result = await execShellCommand(query) as string
 
             //output
-            if (result) {
+            if (result.includes(username)) {
                 result = `${username} added to admin` +
                     `\`\`\`${result}\`\`\``
-            } else {
+                    
+            //error
+            } else if(result) {
+                result = `Error <@227956824521834500>` + 
+                    `\`\`\`${result}\`\`\``
+            }else {
                 result = `${username} already exist`
             }
 
