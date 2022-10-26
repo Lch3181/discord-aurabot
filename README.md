@@ -35,7 +35,7 @@ copy the template below
 
 ```env
 TOKEN=your bot token
-MongoDB_URI=your MongoDB database link
+MONGO_URI=your MongoDB database link
 
 # permission, can have more than 1 owner, just add like array.
 BOTOWNER=["your discord id", "your discord2 id"]
