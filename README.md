@@ -9,6 +9,7 @@ allow your ip to access it from network
 setup a [discord bot](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
 select below options when generating invitation link
 ```
+check MESSAGE CONTENT INTENT
 bot
 application.commands
 ```
