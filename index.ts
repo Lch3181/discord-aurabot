@@ -45,9 +45,8 @@ client.on('messageCreate', message => {
                 if (fileExtension == "w3x") {
                     let replyMessage = await message.reply("uploading new map")
                     let filename = url.split("/").pop()
-                    let filenameWithoutExtension = filename!.replace(".w3x", "")
                     let config = kfs["auto_follow_map_update_config_name"]
-                    const filesize = await uploadmap(url, filenameWithoutExtension!, config)
+                    const filesize = await uploadmap(url, filename!, config)
 
                     const result = `Configuration: ${config}\n` +
                     `Map: ${filename} with ${filesize} MB\n` +
