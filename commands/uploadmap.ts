@@ -66,9 +66,9 @@ export async function uploadmap(url: string, filename: string, config: string) {
     const syntax = `wget -O \"/home/${OSuser}/aura-bot/maps/${filename}\" \"${url}\"`
 
     //write config file
-    const data = `map_path = \"maps\\${filename}\"\n` +
+    const data = `map_path = maps\\${filename}\n` +
     `map_type =\n` +
-    `map_localpath = \"${filename}\"\n`
+    `map_localpath = ${filename}\n`
 
     fs.writeFile(`/home/${OSuser}/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
         if (error) throw error
