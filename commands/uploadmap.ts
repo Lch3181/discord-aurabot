@@ -63,26 +63,22 @@ export default {
 
 export async function uploadmap(url: string, filename: string, config: string) {
     const OSuser = os.userInfo().username
-    const newFilename = filename.replaceAll("_", " ")
-    const syntax = `wget -O \"/home/${OSuser}/aura-bot/maps/${newFilename}\" \"${url}\"`
+    const syntax = `wget -O \"/home/${OSuser}/aura-bot/maps/${filename}\" \"${url}\"`
 
     //write config file
-    const data = `map_path = \"maps\\${newFilename}\"\n` +
+    const data = `map_path = \"maps\\${filename}\"\n` +
     `map_type =\n` +
-    `map_localpath = \"${newFilename}\"\n`
+    `map_localpath = \"${filename}\"\n`
 
     fs.writeFile(`/home/${OSuser}/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
         if (error) throw error
     })
     
-    console.log(syntax)
-    console.log(data)
-
     //download map
     await execShellCommand(syntax)
 
     //get filesize for user to double check if correct
-    const filesize = (await fs.promises.stat(`/home/${OSuser}/aura-bot/maps/${newFilename}`)).size
+    const filesize = (await fs.promises.stat(`/home/${OSuser}/aura-bot/maps/${filename}`)).size
     let output = (filesize/1024/1024).toPrecision(4)
 
     return new Promise<string>(resolve => {
