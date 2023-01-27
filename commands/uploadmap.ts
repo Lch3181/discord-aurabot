@@ -45,26 +45,14 @@ export default {
             const config = interaction.options.getString('config_name')
             const syntax = `wget -O \"/home/${OSuser}/aura-bot/maps/${filename}\" \"${url}\"`
 
-            //write config file
-            const data = `map_path = maps\\${filename}\n` +
-                `map_type =\n` +
-                `map_localpath = ${filename}\n`
-
-            fs.writeFile(`/home/${OSuser}/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
-                if (error) throw error
-            })
-
-            //download map
-            await execShellCommand(syntax)
-
             //get filesize for user to double check if correct
-            const filesize = (await fs.promises.stat(`/home/${OSuser}/aura-bot/maps/${filename}`)).size
+            const filesize = await uploadmap(url!, filename!, config!)
 
             //output
             const result = `Configuration: ${config}\n` +
-                `Map: ${filename} with ${filesize} Byte\n` +
+                `Map: ${filename} with ${filesize} MB\n` +
                 `Download: ${url}\n` +
-                `You can now enter the game and type !load ${config} to host ${filename}`
+                `You can now enter the game and dm the bot !load ${config} to host ${filename} with !priv/pub 'gamename'`
 
             await interaction.editReply({
                 content: result,
@@ -72,3 +60,32 @@ export default {
         }
     },
 } as ICommand
+
+export async function uploadmap(url: string, filename: string, config: string) {
+    const OSuser = os.userInfo().username
+    const newFilename = filename.replaceAll("_", " ")
+    const syntax = `wget -O \"/home/${OSuser}/aura-bot/maps/${newFilename}\" \"${url}\"`
+
+    //write config file
+    const data = `map_path = \"maps\\${newFilename}\"\n` +
+    `map_type =\n` +
+    `map_localpath = \"${newFilename}\"\n`
+
+    fs.writeFile(`/home/${OSuser}/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
+        if (error) throw error
+    })
+    
+    console.log(syntax)
+    console.log(data)
+
+    //download map
+    await execShellCommand(syntax)
+
+    //get filesize for user to double check if correct
+    const filesize = (await fs.promises.stat(`/home/${OSuser}/aura-bot/maps/${newFilename}`)).size
+    let output = (filesize/1024/1024).toPrecision(4)
+
+    return new Promise<string>(resolve => {
+        resolve(output)
+    })
+}

@@ -1,7 +1,10 @@
-import DiscordJS, { Intents } from 'discord.js'
+import DiscordJS, { Intents, Message } from 'discord.js'
 import WOKCommands from 'wokcommands'
 import path from 'path'
 import dotenv from 'dotenv'
+import keyFileStorage from 'key-file-storage'
+import { uploadmap } from './commands/uploadmap'
+const kfs = keyFileStorage('./config')
 dotenv.config()
 
 const client = new DiscordJS.Client({
@@ -9,6 +12,7 @@ const client = new DiscordJS.Client({
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MESSAGES,
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Intents.FLAGS.MESSAGE_CONTENT
     ],
 })
 
@@ -29,6 +33,33 @@ client.on('ready', async () => {
             'slash'
         ],
     })
+})
+
+client.on('messageCreate', message => {
+    //if (!message.author.bot) return;
+    if (message.channelId === kfs["auto_follow_map_update_channel_id"]) {
+        if (message.attachments.size > 0) {
+            message.attachments.forEach(async attachment => {
+                let url = attachment.url
+                let fileExtension = url.slice(-3)
+                if (fileExtension == "w3x") {
+                    let replyMessage = await message.reply("uploading new map")
+                    let filename = url.split("/").pop()
+                    let filenameWithoutExtension = filename!.replace(".w3x", "")
+                    let config = kfs["auto_follow_map_update_config_name"]
+                    const filesize = await uploadmap(url, filenameWithoutExtension!, config)
+
+                    const result = `Configuration: ${config}\n` +
+                    `Map: ${filename} with ${filesize} MB\n` +
+                    `Download: ${url}\n` +
+                    `You can now enter the game and dm the bot !load ${config} to host ${filename} with !priv/pub 'gamename'`
+    
+                    await replyMessage.edit(result)
+                }
+            });
+        }
+    }
+    
 })
 
 if(process.env.NODE_ENV == "development") {
