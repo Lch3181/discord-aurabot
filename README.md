@@ -103,4 +103,5 @@ pm2 save
 - /unban(username) **botowner/private only**
 - /ban_list(optional; username)
 - /uploadmap(url, filename, config name) **botowner/private only**
+- /auto_upload_map(channel, config name) **botowner/private only**
 - /cmd(syntax) **botowner only**
