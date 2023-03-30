@@ -37,6 +37,7 @@ copy the template below
 ```env
 TOKEN=your bot token
 MONGO_URI=your MongoDB database link
+AURABOT_ADDRESS=you aura bot folder location. ex: /home/ubuntu/aura-bot
 
 # permission, can have more than 1 owner, just add like array.
 BOTOWNER=["your discord id", "your discord2 id"]
