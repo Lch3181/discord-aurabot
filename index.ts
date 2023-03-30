@@ -48,11 +48,17 @@ client.on('messageCreate', message => {
                     let config = kfs["auto_follow_map_update_config_name"]
                     const filesize = await uploadmap(url, filename!, config)
 
-                    const result = `Configuration: ${config}\n` +
-                    `Map: ${filename} with ${filesize} MB\n` +
+                    var result = `Map: ${filename} with ${filesize} MB\n` +
                     `Download: ${url}\n` +
-                    `You can now enter the game and dm the bot !load ${config} to host ${filename} with !priv/pub 'gamename'`
-    
+                    `You can now enter the game and dm the bot !map ${filename} to host ${filename} with !priv/pub 'gamename'`
+        
+                    if (config != null && config != "null") {
+                        result = `Configuration: ${config}\n` +
+                        `Map: ${filename} with ${filesize} MB\n` +
+                        `Download: ${url}\n` +
+                        `You can now enter the game and dm the bot !load ${config} to host ${filename} with !priv/pub 'gamename'`
+                    }
+
                     await replyMessage.edit(result)
                 }
             });

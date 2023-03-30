@@ -19,7 +19,7 @@ export default {
         {
             name: 'config_name',
             description: 'the name of the config file. Example for twrpg: twre',
-            required: true,
+            required: false,
             type: 3
         }
     ],
@@ -39,7 +39,10 @@ export default {
             kfs["auto_follow_map_update_config_name"] = config
 
             //output
-            const result = `now following ${channel} to upload map with config name: ${config}`
+            var result = `now following ${channel} to upload map`
+            if (config) {
+                result = `now following ${channel} to upload map with config name: ${config}`
+            }
 
             await interaction.editReply({
                 content: result,

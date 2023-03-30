@@ -1,10 +1,9 @@
-import WOKCommands, { ICommand } from "wokcommands";
+import { ICommand } from "wokcommands";
 import { execShellCommand } from "../global";
 import * as fs from 'fs'
-import * as os from 'os'
 
 export default {
-    name: 'uploadmap',
+    name: 'upload_map',
     category: 'Configuration',
     description: 'upload a map to bot (root admin only)',
     ownerOnly: (process.env.USAGE == "public") ? true:false,
@@ -26,7 +25,7 @@ export default {
         {
             name: 'config_name',
             description: 'the name of the config file. Example for twrpg: twre',
-            required: true,
+            required: false,
             type: 3
         }
     ],
@@ -39,20 +38,24 @@ export default {
             await interaction.deferReply({
             })
 
-            const OSuser = os.userInfo().username
             const url = interaction.options.getString('url')
             const filename = interaction.options.getString('file_name') + '.w3x'
             const config = interaction.options.getString('config_name')
-            const syntax = `wget -O \"/home/${OSuser}/aura-bot/maps/${filename}\" \"${url}\"`
 
             //get filesize for user to double check if correct
             const filesize = await uploadmap(url!, filename!, config!)
 
             //output
-            const result = `Configuration: ${config}\n` +
+            var result = `Map: ${filename} with ${filesize} MB\n` +
+            `Download: ${url}\n` +
+            `You can now enter the game and dm the bot !map ${filename} to host ${filename} with !priv/pub 'gamename'`
+
+            if (config) {
+                result = `Configuration: ${config}\n` +
                 `Map: ${filename} with ${filesize} MB\n` +
                 `Download: ${url}\n` +
                 `You can now enter the game and dm the bot !load ${config} to host ${filename} with !priv/pub 'gamename'`
+            }
 
             await interaction.editReply({
                 content: result,
@@ -61,24 +64,25 @@ export default {
     },
 } as ICommand
 
-export async function uploadmap(url: string, filename: string, config: string) {
-    const OSuser = os.userInfo().username
-    const syntax = `wget -O \"/home/${OSuser}/aura-bot/maps/${filename}\" \"${url}\"`
+export async function uploadmap(url: string, filename: string, config?: string) {
+    const syntax = `wget -O \"${process.env.AURABOT_ADDRESS}/maps/${filename}\" \"${url}\"`
 
     //write config file
-    const data = `map_path = maps\\${filename}\n` +
-    `map_type =\n` +
-    `map_localpath = ${filename}\n`
-
-    fs.writeFile(`/home/${OSuser}/aura-bot/mapcfgs/${config}.cfg`, data, 'utf8', error => {
-        if (error) throw error
-    })
+    if (config != null && config != "null") {
+        const data = `map_path = maps\\${filename}\n` +
+        `map_type =\n` +
+        `map_localpath = ${filename}\n`
+    
+        fs.writeFile(`${process.env.AURABOT_ADDRESS}/mapcfgs/${config}.cfg`, data, 'utf8', error => {
+            if (error) throw error
+        })
+    }
     
     //download map
     await execShellCommand(syntax)
 
     //get filesize for user to double check if correct
-    const filesize = (await fs.promises.stat(`/home/${OSuser}/aura-bot/maps/${filename}`)).size
+    const filesize = (await fs.promises.stat(`${process.env.AURABOT_ADDRESS}/maps/${filename}`)).size
     let output = (filesize/1024/1024).toPrecision(4)
 
     return new Promise<string>(resolve => {
