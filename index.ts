@@ -1,9 +1,9 @@
-import DiscordJS, { Intents, Message } from 'discord.js'
+import DiscordJS, { Intents } from 'discord.js'
 import WOKCommands from 'wokcommands'
 import path from 'path'
 import dotenv from 'dotenv'
 import keyFileStorage from 'key-file-storage'
-import { uploadmap } from './commands/uploadmap'
+import { uploadmap } from './global'
 const kfs = keyFileStorage('./config')
 dotenv.config()
 

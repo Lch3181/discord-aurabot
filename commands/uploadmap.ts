@@ -1,9 +1,8 @@
 import { ICommand } from "wokcommands";
-import { execShellCommand } from "../global";
-import * as fs from 'fs'
+import { uploadmap } from "../global";
 
 export default {
-    name: 'upload_map',
+    name: 'uploadmap',
     category: 'Configuration',
     description: 'upload a map to bot (root admin only)',
     ownerOnly: (process.env.USAGE == "public") ? true:false,
@@ -63,29 +62,3 @@ export default {
         }
     },
 } as ICommand
-
-export async function uploadmap(url: string, filename: string, config?: string) {
-    const syntax = `wget -O \"${process.env.AURABOT_ADDRESS}/maps/${filename}\" \"${url}\"`
-
-    //write config file
-    if (config != null && config != "null") {
-        const data = `map_path = maps\\${filename}\n` +
-        `map_type =\n` +
-        `map_localpath = ${filename}\n`
-    
-        fs.writeFile(`${process.env.AURABOT_ADDRESS}/mapcfgs/${config}.cfg`, data, 'utf8', error => {
-            if (error) throw error
-        })
-    }
-    
-    //download map
-    await execShellCommand(syntax)
-
-    //get filesize for user to double check if correct
-    const filesize = (await fs.promises.stat(`${process.env.AURABOT_ADDRESS}/maps/${filename}`)).size
-    let output = (filesize/1024/1024).toPrecision(4)
-
-    return new Promise<string>(resolve => {
-        resolve(output)
-    })
-}
