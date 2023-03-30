@@ -36,7 +36,7 @@ client.on('ready', async () => {
 })
 
 client.on('messageCreate', message => {
-    //if (!message.author.bot) return;
+    if (!message.author.bot) return;
     if (message.channelId === kfs["auto_follow_map_update_channel_id"]) {
         if (message.attachments.size > 0) {
             message.attachments.forEach(async attachment => {
