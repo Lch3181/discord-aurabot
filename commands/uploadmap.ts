@@ -1,5 +1,5 @@
 import { ICommand } from "wokcommands";
-import { uploadmap } from "../global";
+import { uploadmap } from "../helpers/global";
 
 export default {
     name: 'uploadmap',

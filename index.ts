@@ -3,9 +3,22 @@ import WOKCommands from 'wokcommands'
 import path from 'path'
 import dotenv from 'dotenv'
 import keyFileStorage from 'key-file-storage'
-import { uploadmap } from './global'
+import { uploadmap } from './helpers/global'
+import { watchFile } from './helpers/watchAppendedLines'
 const kfs = keyFileStorage('./config')
 dotenv.config()
+
+function handleNewLine(newLine: string): void {
+    // Send the line as a message to Discord
+    const channelId = kfs["auto_log_channel_id"];
+    if (channelId == "") {
+        return
+    }
+    const channel = client.channels.cache.get(channelId);
+    if (channel?.isText()) {
+        channel.send(newLine);
+    }
+}
 
 const client = new DiscordJS.Client({
     intents: [
@@ -17,6 +30,7 @@ const client = new DiscordJS.Client({
 })
 
 client.on('ready', async () => {
+    // create commands
     new WOKCommands(client, {
         commandsDir: path.join(__dirname, 'commands'),
         typeScript: true,
@@ -33,8 +47,16 @@ client.on('ready', async () => {
             'slash'
         ],
     })
+
+    // Watch for appended lines
+    try {
+        watchFile(handleNewLine);
+    } catch (error) {
+        console.error(error);
+    }
 })
 
+// auto upload map when receive an announcement
 client.on('messageCreate', message => {
     if (!message.author.bot) return;
     if (message.channelId === kfs["auto_follow_map_update_channel_id"]) {
@@ -49,14 +71,14 @@ client.on('messageCreate', message => {
                     const filesize = await uploadmap(url, filename!, config)
 
                     var result = `Map: ${filename} with ${filesize} MB\n` +
-                    `Download: ${url}\n` +
-                    `You can now enter the game and dm the bot !map ${filename} to host ${filename} with !priv/pub 'gamename'`
-        
+                        `Download: ${url}\n` +
+                        `You can now enter the game and dm the bot !map ${filename} to host ${filename} with !priv/pub 'gamename'`
+
                     if (config != null && config != "null") {
                         result = `Configuration: ${config}\n` +
-                        `Map: ${filename} with ${filesize} MB\n` +
-                        `Download: ${url}\n` +
-                        `You can now enter the game and dm the bot !load ${config} to host ${filename} with !priv/pub 'gamename'`
+                            `Map: ${filename} with ${filesize} MB\n` +
+                            `Download: ${url}\n` +
+                            `You can now enter the game and dm the bot !load ${config} to host ${filename} with !priv/pub 'gamename'`
                     }
 
                     await replyMessage.edit(result)
@@ -64,10 +86,10 @@ client.on('messageCreate', message => {
             });
         }
     }
-    
+
 })
 
-if(process.env.NODE_ENV == "development") {
+if (process.env.NODE_ENV == "development") {
     client.login(process.env.TOKEN_DEV)
 } else {
     client.login(process.env.TOKEN)

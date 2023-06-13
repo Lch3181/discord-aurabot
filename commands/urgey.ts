@@ -1,5 +1,5 @@
 import WOKCommands, { ICommand } from "wokcommands";
-import { delay } from "../global";
+import { delay } from "../helpers/global";
 
 export default {
     name: 'urgey',

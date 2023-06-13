@@ -1,5 +1,5 @@
 import WOKCommands, { ICommand } from "wokcommands";
-import { execShellCommand } from "../global";
+import { execShellCommand } from "../helpers/global";
 
 export default {
     name: 'admin_list',
