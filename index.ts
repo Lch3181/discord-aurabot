@@ -62,9 +62,11 @@ client.on('messageCreate', message => {
     if (message.channelId === kfs["auto_follow_map_update_channel_id"]) {
         if (message.attachments.size > 0) {
             message.attachments.forEach(async attachment => {
-                let url = attachment.url
-                let fileExtension = url.slice(-3)
-                if (fileExtension == "w3x") {
+                let url = attachment.url;
+                // Create a regex pattern
+                let regexPattern = /attachments.*?(\.w3x)/g;
+                // Use regex test method to check if ".w3x" exists in the url
+                if (regexPattern.test(url)) {
                     let replyMessage = await message.reply("uploading new map")
                     let filename = url.split("/").pop()
                     let config = kfs["auto_follow_map_update_config_name"]
