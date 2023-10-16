@@ -38,7 +38,7 @@ export default {
             })
 
             const url = interaction.options.getString('url')
-            const filename = interaction.options.getString('file_name') + '.w3x'
+            const filename = interaction.options.getString('file_name')
             const config = interaction.options.getString('config_name')
 
             //get filesize for user to double check if correct
