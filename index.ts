@@ -68,7 +68,8 @@ client.on('messageCreate', message => {
                 // Use regex test method to check if ".w3x" exists in the url
                 if (regexPattern.test(url)) {
                     let replyMessage = await message.reply("uploading new map")
-                    let filename = url.split("/").pop().slice(0, -1)
+                    var filename = url.split("/").pop()
+                    filename = filename.slice(0, -1)
                     let config = kfs["auto_follow_map_update_config_name"]
                     const filesize = await uploadmap(url, filename!, config)
 
