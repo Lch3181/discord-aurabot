@@ -59,18 +59,24 @@ client.on('ready', async () => {
 // auto upload map when receive an announcement
 client.on('messageCreate', message => {
     if (!message.author.bot) return;
+
     if (message.channelId === kfs["auto_follow_map_update_channel_id"]) {
         if (message.attachments.size > 0) {
             message.attachments.forEach(async attachment => {
-                let url = attachment.url;
-                // Create a regex pattern
-                let regexPattern = /attachments.*?(\.w3x)/g;
-                // Use regex test method to check if ".w3x" exists in the url
-                if (regexPattern.test(url)) {
+                const url: string = attachment.url;
+                // Split the URL by '/' to get parts of the URL
+                const urlParts: string[] = url.split('/');
+
+                // The last part of the URL may still contain query parameters, so we need to split it further
+                const filenameWithQueryParams: string = urlParts[urlParts.length - 1];
+
+                // Extract the filename by splitting at the '?' character
+                const filenameArray: string[] = filenameWithQueryParams.split('?');
+                const filename: string = filenameArray[0];
+                // Check if the filename ends with "w3x"
+                if (filename.endsWith(".w3x")) {
                     let replyMessage = await message.reply("uploading new map")
-                    var filename = url.split("/").pop()
-                    filename = filename!.slice(0, -1)
-                    let config = kfs["auto_follow_map_update_config_name"]
+                    const config = kfs["auto_follow_map_update_config_name"]
                     const filesize = await uploadmap(url, filename!, config)
 
                     var result = `Map: ${filename} with ${filesize} MB\n` +
