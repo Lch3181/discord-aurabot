@@ -17,7 +17,7 @@ export default {
         },
         {
             name: 'file_name',
-            description: 'the name of the map. Example for twrpg: twrpgv0.53a_eng',
+            description: 'the name of the map. Example for twrpg: twrpgv0.53a_eng.w3x',
             required: true,
             type: 3
         },
