@@ -64,7 +64,7 @@ install [nodejs lts v16.6+](https://www.digitalocean.com/community/tutorials/how
 ```cmd
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source ~/.bashrc
-nvm install v16.6.0
+nvm install v16.9.0
 node -v
 ```
 
