@@ -17,11 +17,11 @@ export default {
             
             await execShellCommand("pkill aura++")
 
-            await delay(5)
+            await delay(5000)
 
             await execShellCommand(`nohup ${process.env.AURABOT_ADDRESS}/aura++ > ${process.env.AURABOT_ADDRESS}/aura.log 2>&1 &`)
 
-            await delay(5)
+            await delay(5000)
 
             await interaction.editReply({
                 content: "restarted"
