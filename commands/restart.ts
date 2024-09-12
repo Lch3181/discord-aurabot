@@ -15,11 +15,11 @@ export default {
                 content: "restarting arua bot"
             })
             
-            const result = await execShellCommand("pkill aura++")
+            await execShellCommand("pkill aura++")
 
             await delay(5)
 
-            const result = await execShellCommand(`nohup ${process.env.AURABOT_ADDRESS}/aura++ > ${process.env.AURABOT_ADDRESS}/aura.log 2>&1 &`)
+            await execShellCommand(`nohup ${process.env.AURABOT_ADDRESS}/aura++ > ${process.env.AURABOT_ADDRESS}/aura.log 2>&1 &`)
 
             await delay(5)
 
